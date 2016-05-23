@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# ADAPTED BY TOM MERTENS
+# DATE 16-11-2015
+# UPDATED TO RUN WITH NEW JAVA INTERFACE FUNCTIONS TO THE LOGGING DATABASE
+
+# OLD VERSION BY RICCARDO DEMARIA
+# DIST_DIR="/afs/cern.ch/group/si/slap/bin/logging-data-extractor"
+
+# NEW VERSION 
+DIST_DIR="/afs/cern.ch/work/t/tomerten/PyTimber/mdb-ldb"
+
+LIB_DIR=$DIST_DIR/lib/
+# NEW VERSION
+MAIN_JAR=$DIST_DIR/accsoft-cals-extractor-client.jar
+
+# OLD VERSION
+# MAIN_JAR=$DIST_DIR/logging-data-extractor-client.jar
+
+SEP=":"
+CLASSPATH=${MAIN_JAR}${SEP}`ls ${LIB_DIR}/*.jar | tr -s "\n" "$SEP"`
+# echo $CLASSPATH
+
+# run java process with a name of the current script file
+# OLD VERSION
+# java -cp $CLASSPATH -Xms128m -Xmx384m cern.accdm.timeseries.access.client.commandline.Export -C ldb.conf "$@"
+
+# NEW VERSION
+java -cp $CLASSPATH -Xms128m -Xmx1024m cern.accsoft.cals.extr.client.commandline.Export -C mdb.conf "$@"
+
+# FOR INFO ONLY: PACAKGE WHERE COMMANDLINE COMMANDS ARE DEFINED
+# cern.accsoft.cals.extr.client.commandline.Export
+# accsoft-cals-extr-client-nodep.jar
+# accsoft.cals.extr.client.commandline.Export
